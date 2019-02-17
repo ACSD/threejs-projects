@@ -19,7 +19,7 @@ function init() {
 
     // materials.push( new THREE.MeshLambertMaterial( { map: texture, transparent: true } ) );
     materials.push( new THREE.MeshLambertMaterial( { color: 0xFFFFFF } ) );
-    materials.push( new THREE.MeshPhongMaterial( { color: 0xdddddd, specular: 0x009900, shininess: 30, flatShading: true } ) );
+    materials.push( new THREE.MeshPhongMaterial( { color: 0x696969, specular: 0x000000, shininess: 30, flatShading: true } ) );
     materials.push( new THREE.MeshNormalMaterial() );
     materials.push( new THREE.MeshBasicMaterial( { color: 0xffaa00, transparent: true, blending: THREE.AdditiveBlending } ) );
     materials.push( new THREE.MeshLambertMaterial( { color: 0xdddddd } ) );
@@ -72,7 +72,7 @@ function as( shape, extrudeSettings, color, x, y, z, rx, ry, rz, s ) {
     // extruded shape
     var geometry = new THREE.ExtrudeBufferGeometry( shape, extrudeSettings );
     var material = new THREE.MeshPhongMaterial({color:color,specular:0x666666,emissive:0x888888,shininess:-10});
-    var mesh = new THREE.Mesh( geometry, materials[0] );
+    var mesh = new THREE.Mesh( geometry, materials[1] );
     mesh.position.set(x,y,z);mesh.rotation.set(rx,ry,rz);mesh.scale.set(s,s,s);group.add(mesh);
 }
 
