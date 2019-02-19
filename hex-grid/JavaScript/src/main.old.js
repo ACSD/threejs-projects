@@ -1,12 +1,10 @@
 var container, stats, info, camera, scene, renderer, group, hg, sel;
 var gui, mat = { color: 0x696969, specular: 0x000000, shininess: 30, flatShading: true };
 
-var config = { size:31, step: 2 ** -8, select_count: 8 };
+var config = { depth: 100, size:31, step: 2**-10, attempts: 8, probability: 1 };
 var app = { grid: new THREE.HexGrid() };
 
 var target_heights = new Map();
-
-var select_count=8;
 
 init();window.addEventListener("load",function(){animate(); generate_grid(); create_gui();});
 
@@ -45,7 +43,7 @@ function generate_grid(){
     var p;hg=new THREE.Shape();for(var i=0;i<6;i++){p=hc({x:0,y:0},config.size,i+1);i==0?hg.moveTo(p.x,p.y):hg.lineTo(p.x,p.y);}
 
     while(group.children.length>0){group.remove(group.children[0]);}
-    var e={depth:100,bevelEnabled:true,bevelSegments:2,steps:2,bevelSize:1,bevelThickness:1};
+    var e={depth:config.depth,bevelEnabled:true,bevelSegments:2,steps:2,bevelSize:1,bevelThickness:1};
 
     var w=(2*config.size)*0.76,h=Math.sqrt(Math.PI)*config.size;
     var c=(((window.innerWidth*1.1)/(w*4))<<0)+(15-(config.size / 10)),
@@ -55,7 +53,7 @@ function generate_grid(){
     for(var x=0;x<c;x++){for(var y=0;y<r;y++){as(hg,e,0x111111,(x*w)-a,((y*h)-(x%2?h/2:0))-b,0,0,0,0,1);}}
     //group.traverse(function(e){e.scale.set(1,1,Math.abs(Math.random()));});
 
-    if(app.gui)app.gui.sel_.max(group.children.length);
+    if(app.gui)app.gui.attempts.max(group.children.length);
     group.position.x = 0.5*config.size;
     group.position.y = (Math.sqrt(Math.PI/2)*config.size);
 }
@@ -73,10 +71,10 @@ function as( shape, extrudeSettings, color, x, y, z, rx, ry, rz, s ) {
 }
 
 function sc() {
-    if(!group.children)return;var items=group.children,probability=0.1;
-    for(var i=0; i < config.select_count; i++) {
+    if(!group.children)return;var items=group.children;
+    for(var i=0; i < config.attempts; i++) {
         var item = items[Math.floor(Math.random()*items.length)];if(!item)return;
-        if(Math.random()>(1-probability) && !target_heights.has(item.uuid))
+        if(Math.random()>(1-(config.probability/100)) && !target_heights.has(item.uuid))
             target_heights.set(item.uuid,Math.abs(Math.random()));
     }
 }
@@ -97,9 +95,11 @@ function create_gui() {
 
     app.gui.color = app.gui.addColor(mat, "color").onChange(generate_grid);
 
+    app.gui.depth = app.gui.add(config, "depth", 20, 200, 1).onChange(generate_grid);
     app.gui.size = app.gui.add(config, "size", 20, 100, 1).onChange(generate_grid);
-    app.gui.step = app.gui.add(config, "step", 0, 0.05, 2**-8);
-    app.gui.sel_ = app.gui.add(config, "select_count", 1, 100, 1);
+    app.gui.step = app.gui.add(config, "step", 2**-10, 0.05+(2**-10), 2**-10);
+    app.gui.attempts = app.gui.add(config, "attempts", 1, 100, 1);
+    app.gui.probability = app.gui.add(config, "probability", 1, 100, 0.5);
 
     // app.gui.add(app.grid,'generate').name("Generate");
 }
