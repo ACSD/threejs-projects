@@ -1,13 +1,13 @@
 import {
     OrbitControls
-} from '/_/js/controls/OrbitControls.js';
-import * as THREE from '/_/js/module/three.module.js';
-import Stats from '/_/js/module/stats.module.js';
+} from '../../_/js/controls/OrbitControls.js';
+import * as THREE from '../../_/js/module/three.module.js';
+import Stats from '../../_/js/module/stats.module.js';
 import {
     GUI
-} from '/_/js/module/dat.gui.module.js';
+} from '../../_/js/module/dat.gui.module.js';
 
-import THREEApp from '/_/js/module/THREEApp.js';
+import THREEApp from '../../_/js/module/THREEApp.js';
 
 import {
     HexagonShape,

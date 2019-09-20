@@ -1,4 +1,4 @@
-import * as THREE from '/_/js/module/three.module.js';
+import * as THREE from './three.module.js';
 class THREEApp 
 {
     constructor(options) 

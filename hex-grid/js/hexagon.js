@@ -5,7 +5,7 @@ import {
     Mesh,
     MeshPhongMaterial,
     Vector2
-} from '/_/js/module/three.module.js';
+} from '../../_/js/module/three.module.js';
 
 let SYMBOLS = {
     CENTER: Symbol("center"),
@@ -118,7 +118,7 @@ class HexagonCell extends Mesh {
     }
 
     set height(value) {
-        
+
         this.scale.z = value;
     }
     get height() {
