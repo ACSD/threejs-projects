@@ -77,9 +77,11 @@ function ht(child) {
     if(target_heights.has(child.uuid)) {
         var c = child.scale.z;
         var t=target_heights.get(child.uuid);
-        var d=t-c;var m=(d%config.step);
+        var d=t-c;
+        var m=(d%config.step);
         if(c==t-m)target_heights.delete(child.uuid);
-        else c-=d>0?-config.step:config.step;child.scale.set(1,1,c);
+        else c-=d>0?-config.step:config.step;
+        child.scale.set(1,1,c);
     }
 }
 
