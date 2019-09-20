@@ -5,7 +5,7 @@ import {
     Mesh,
     MeshPhongMaterial,
     Vector2
-} from '../../_/js/module/three.module.js';
+} from '../../common/js/module/three.module.js';
 
 let SYMBOLS = {
     CENTER: Symbol("center"),
